@@ -1,0 +1,53 @@
+<HTML>
+    <HEAD><TITLE>CTF Manager Test Harness</TITLE></HEAD>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+
+    <script>
+        $(function() {
+            $("#newJS").on("click", function() {
+                $.post( "api/newJS", function( data ) {
+                    alert("JuiceShop Challenge URL: " + data.web_url);
+                });
+            });
+        });
+        $(function() {
+            $("#newCTFd").on("click", function() {
+                var authorizationBasic = window.btoa($("#username").val() + ':' + $("#password").val());
+                var req = {"type" : "POST", "url": "/api/newCTFd", beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + authorizationBasic); } 
+                };
+                $.ajax(req, function( data ) {
+                    alert("CTFd URL: " + data.web_url);
+                });
+            });
+        });
+    </script>
+    <BODY>
+        <h2>CTF Manager Test Harness</h2>
+        <div id="credentialsDiv" name="credentialsDiv" style="border: 2px solid black" width="50%">
+            <form id="credentialsForm" name="credentialsForm" >
+                <table>
+                    <tr><td><label for="username">Username</label></td><td><input name="username" id="username" /></td></tr>
+                    <tr><td><label for="password">Password</label></td><td><input name="password" id="password" type="password" /></td></tr>
+                </table>
+            </form>
+        </div>
+        <div id="createCTFdFormDiv" name="createCTFdFormDiv" style="border: 2px solid black" width="50%">
+            <form id="createCTFdForm" name="createCTFdForm" action="/api/newCTFd" method="POST">
+                <table>
+                    <tr><td><button name="newCTFd" id="newCTFd" type="button">New CTFd</button></td><td>&nbsp;</td></tr>
+                </table>
+            </form>
+        </div>
+        <div id="createJSFormDiv" name="createJSFormDiv" style="border: 2px solid black" width="50%">
+            <form id="createJSForm" name="createJSForm" action="/api/newJS" method="POST">
+                <table>
+                    <tr><td><button name="newJS" id="newJS" type="button">New JS</button></td><td>&nbsp;</td></tr>
+                </table>
+            </form>
+        </div>    
+    </BODY>
+</HTML>
