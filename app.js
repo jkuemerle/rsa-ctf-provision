@@ -22,7 +22,7 @@ if(fs.existsSync(netrcLocation)) {
     myNetrc = netrc(netrcLocation);
 }
 
-const HEROKU_TOKEN = process.env.HEROKU_TOKEN ? process.env.HEROKU_TOKEN : myNetrc['api.heroku.com'].password ;
+const HEROKU_TOKEN = process.env.HEROKU_TOKEN ? process.env.HEROKU_TOKEN : myNetrc ?  myNetrc['api.heroku.com'].password : "" ;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
