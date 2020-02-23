@@ -43,12 +43,24 @@ if(LOCAL_ENV) {
 }
 app.use(express.static('public'));
 
-console.log('Provision app listening on port ' + serverPort + '! Go to https://trailheadx-ctf.local:' + serverPort)
+console.log('Provision app listening on port ' + serverPort + '! Go to http://localhost:' + serverPort)
 
 app.post('/api/newCTFd',
   passport.authenticate('basic', { session: false }),
   function(req, res) {
     fn.createCTFd({ herokuToken: HEROKU_TOKEN}, {importID: 'RSA2020', url: 'https://rsa-ctf-provision.herokuapp.com/ctfd.tar.gz' }).then(ret => {
+        res.json({ name: ret.name, id: ret.id, web_url: ret.web_url});
+        res.end();
+    }).catch(err => {
+        res.sendStatus(500);
+        res.end;
+    });
+  });
+
+app.post('/api/newJS',
+  passport.authenticate('basic', { session: false }),
+  function(req, res) {
+    fn.createJuiceShop({ herokuToken: HEROKU_TOKEN}, { url: 'https://rsa-ctf-provision.herokuapp.com/juiceshop.targz' }).then(ret => {
         res.json({ name: ret.name, id: ret.id, web_url: ret.web_url});
         res.end();
     }).catch(err => {

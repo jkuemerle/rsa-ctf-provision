@@ -8,18 +8,19 @@
 
     <script>
         $(function() {
-            $("#newJS").on("click", function() {
-                $.post( "api/newJS", function( data ) {
-                    alert("JuiceShop Challenge URL: " + data.web_url);
+            var authorizationBasic = window.btoa($("#username").val() + ':' + $("#password").val());
+                var req = {"type" : "POST", "url": "/api/newJS", beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + authorizationBasic); } 
+                };
+                $.ajax(req).done(function( data ) {
+                    alert("CTFd URL: " + data.web_url);
                 });
-            });
         });
         $(function() {
             $("#newCTFd").on("click", function() {
                 var authorizationBasic = window.btoa($("#username").val() + ':' + $("#password").val());
                 var req = {"type" : "POST", "url": "/api/newCTFd", beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + authorizationBasic); } 
                 };
-                $.ajax(req, function( data ) {
+                $.ajax(req).done(function( data ) {
                     alert("CTFd URL: " + data.web_url);
                 });
             });

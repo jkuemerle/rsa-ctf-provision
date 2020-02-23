@@ -42,3 +42,26 @@ module.exports.createCTFd = function(authData, source) {
             });
     });
 }
+
+module.exports.createJuiceShop = function(authData, source) {
+    return new Promise((resolve,reject) => {
+        var heroku = new Heroku({ token: authData.herokuToken });
+        heroku.post('/apps', ).then(app => {
+            juiceApp = app;
+            var newConfig = { };
+            heroku.patch(`/apps/${app.name}/config-vars`, { body: newConfig } ).then(res => {
+                // push a build
+                heroku.post(`/apps/${app.name}/builds`, { body: { source_blob: { url: source.url, version: '1' } } }).then(build => {
+                    console.log(build);
+                    resolve(app);
+                }).catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+            });
+        }).catch(err => {
+            console.log(err);
+            reject(err);
+        });
+    });
+}
