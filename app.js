@@ -60,7 +60,7 @@ app.post('/api/newCTFd',
 app.post('/api/newJS',
   passport.authenticate('basic', { session: false }),
   function(req, res) {
-    fn.createJuiceShop({ herokuToken: HEROKU_TOKEN}, { url: 'https://rsa-ctf-provision.herokuapp.com/juiceshop.targz' }).then(ret => {
+    fn.createJuiceShop({ herokuToken: HEROKU_TOKEN}, { url: 'https://rsa-ctf-provision.herokuapp.com/juiceshop.tar.gz' }).then(ret => {
         res.json({ name: ret.name, id: ret.id, web_url: ret.web_url});
         res.end();
     }).catch(err => {
