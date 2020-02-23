@@ -8,12 +8,14 @@
 
     <script>
         $(function() {
-            var authorizationBasic = window.btoa($("#username").val() + ':' + $("#password").val());
+            $("#newJS").on("click", function() {
+                var authorizationBasic = window.btoa($("#username").val() + ':' + $("#password").val());
                 var req = {"type" : "POST", "url": "/api/newJS", beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + authorizationBasic); } 
                 };
                 $.ajax(req).done(function( data ) {
-                    alert("CTFd URL: " + data.web_url);
+                    alert("JuiceShop URL: " + data.web_url);
                 });
+            });
         });
         $(function() {
             $("#newCTFd").on("click", function() {
